@@ -22,9 +22,14 @@ class Searches {
             });
 
             const resp= await instance.get();
-            console.log(resp.data);
-            
-            return []; //return selected places
+            //! Aca estamos retornando en el mapeo, un objeto implicitamente encerrandolo en ({})
+            //! En mapbox es center= [long, lat]
+            return resp.data.features.map( place =>({
+                id: place.id,
+                name: place.place_name,
+                lng: place.center[0],
+                lat: place.center[1]
+            }))
         } catch (error) {
             return [];
         }
